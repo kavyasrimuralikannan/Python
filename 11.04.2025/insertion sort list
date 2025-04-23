@@ -1,0 +1,21 @@
+class Solution(object):
+    def insertionSortList(self, head):
+        if not head or not head.next:
+            return head
+
+        dummy = ListNode(None)
+        dummy.next, tail = head, head.next
+        dummy.next.next = None
+
+        while tail:
+            pre, current, next = dummy, dummy.next, tail.next
+            while current:
+                if tail.val <= current.val:
+                    pre.next, tail.next = tail, current
+                    break
+                pre, current = current, current.next
+            else:
+                pre.next, tail.next = tail, None
+            tail = next
+
+        return dummy.next
