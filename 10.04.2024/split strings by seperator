@@ -1,0 +1,10 @@
+class Solution(object):
+    def splitWordsBySeparator(self,l,s):
+        n=len(l)
+        l1=[]
+        for i in l:
+            s2=i.split(s)
+            for j in s2:
+                if j!="":
+                    l1.append(j)
+        return l1
