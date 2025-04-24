@@ -1,0 +1,71 @@
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        s = list(s)
+        
+        st = []
+        num = 0
+        
+        last_operator = '+'
+        for i in s:
+           
+            if i == ' ':
+                continue
+            if i.isalnum():
+                num = num*10 + int(i)
+            else:
+                if last_operator == '+':
+                    st.append(num)
+                    num = 0
+                    last_operator = i
+                elif last_operator == '-':
+                    st.append(-1*num)
+                    num = 0
+                    last_operator = i
+                elif last_operator == '*':
+                    divisor = st.pop(-1)
+                    st.append(divisor * num)
+                    num = 0
+                    last_operator = i
+                elif last_operator == '/':
+                    divisor = st.pop(-1)
+                    if divisor < 0: 
+                        st.append(-1*(abs(divisor) / num))
+                    else:
+                        st.append(divisor/num)
+                    num = 0
+                    last_operator = i
+                else:
+                    pass
+
+        if last_operator == '+':
+            st.append(num)
+                    
+        elif last_operator == '-':
+            st.append(-1*num)
+                   
+        elif last_operator == '*':
+            divisor = st.pop(-1)
+            st.append(divisor * num)
+                    
+        elif last_operator == '/':
+            divisor = st.pop(-1)
+            if divisor >= 0: 
+                st.append(divisor/num)
+            else:
+                st.append(-1*(abs(divisor) / num))
+                
+           
+                   
+        
+        return int(sum(st))
+
+
+
+
+            
+
+
