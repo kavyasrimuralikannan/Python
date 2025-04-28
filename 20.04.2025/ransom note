@@ -1,0 +1,11 @@
+class Solution(object):
+    def canConstruct(self, ransomNote, magazine):
+        a=""
+        for i in ransomNote:
+            if i not in a:
+                a=a+i
+        for i in a :
+            if i not in magazine or ransomNote.count(i)>magazine.count(i):
+                return False
+        return True
+        
