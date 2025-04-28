@@ -1,0 +1,32 @@
+class Solution(object):
+    def add(self, a, b):
+        i, j, carry, r = len(a) - 1, len(b) - 1, 0, collections.deque()
+        while i >= 0 or j >= 0:
+            carry, mod = divmod(
+                (int(a[i]) if i >= 0 else 0) +
+                (int(b[j]) if j >= 0 else 0) + carry, 10)
+            r.appendleft(mod)
+
+            i -= 1
+            j -= 1
+
+        if carry:
+            r.appendleft(carry)
+
+        return ''.join(map(str, r))
+
+    def check(self, a, b, num):
+        if not num:
+            return True
+
+        sum = self.add(a, b)
+        if num.startswith(sum):
+            return self.check(b, sum, num[len(sum):])
+        return False
+
+    def isAdditiveNumber(self, num):
+        return any(
+            self.check(num[:i + 1], num[i + 1:j + 1], num[j + 1:])
+            for i in xrange(len(num) - 2)
+            for j in xrange(i + 1, len(num) - 1)
+        )
