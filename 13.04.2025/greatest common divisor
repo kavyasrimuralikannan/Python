@@ -1,0 +1,25 @@
+class Solution(object):
+    def gcdOfStrings(self, str1, str2):
+        
+        def rem(s1, s2):
+            if not s2:
+                return ""
+            elif len(s1)>len(s2):
+                return s2
+            for c1, c2 in zip(s1, s2):
+                if c1!=c2:
+                    return s2
+            return rem(s1, s2[len(s1):] )
+        memo = set()
+        def gcd(s1, s2):
+            if (s1, s2) in memo:
+                return ""
+            memo.add((s1, s2))
+            t = rem(s1, s2)
+            if not t:
+                return s1
+            return gcd(t, s1)
+        if len(str1)<len(str2):
+           return gcd(str1, str2)
+        else:
+           return gcd(str2, str1)
