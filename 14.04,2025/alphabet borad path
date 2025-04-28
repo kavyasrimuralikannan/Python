@@ -1,0 +1,42 @@
+class Solution(object):
+    def alphabetBoardPath(self, target):
+        """
+        :type target: str
+        :rtype: str
+        """
+        board = ["abcde", "fghij", "klmno", "pqrst", "uvwxy", "z"]
+        positions = {}
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                positions[board[i][j]] =  (i,j)
+        def get_path(curPosi, nextPosi):
+            if curPosi == nextPosi:
+                return "!"
+            rDiff, cDiff = curPosi[0] - nextPosi[0], curPosi[1] - nextPosi[1]
+            path = []
+            if board[curPosi[0]][curPosi[1]] == "z":
+                print("next is z")
+                path.append("U"*rDiff if rDiff > 0 else "D"*(-rDiff))
+                path.append("L"*cDiff if cDiff > 0 else "R"*(-cDiff))
+            else: 
+                path.append("L"*cDiff if cDiff > 0 else "R"*(-cDiff))
+                path.append("U"*rDiff if rDiff > 0 else "D"*(-rDiff))
+            path.append("!")
+
+            return "".join(path)
+
+        ans = []
+
+        curPosi = (0,0)
+        for c in target:
+            nextPosi = positions[c]
+            path = get_path(curPosi, nextPosi)
+            ans.append(path)
+            curPosi = nextPosi
+        return "".join(ans)
+        
+
+            
+
+            
+            
