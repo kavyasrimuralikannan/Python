@@ -1,0 +1,35 @@
+class Solution:
+    def parseBoolExpr(self, expression):
+        def evaluate(operator, operands):
+            if operator == '&':
+                return all(operands)
+            elif operator == '|':
+                return any(operands)
+            elif operator == '!':
+                return not operands[0]
+
+        def helper(expr, index):
+            stack = []
+            while index < len(expr):
+                char = expr[index]
+
+                if char == 't':
+                    stack.append(True)
+                elif char == 'f':
+                    stack.append(False)
+                elif char == '!' or char == '&' or char == '|':
+                    stack.append(char)
+                elif char == '(':
+                    stack.append('(')
+                elif char == ')':
+                    operands = []
+                    while stack and stack[-1] != '(':
+                        operands.append(stack.pop())
+                    stack.pop()
+                    operator = stack.pop()
+                    stack.append(evaluate(operator, operands[::-1]))
+                index += 1
+
+            return stack[-1]
+
+        return helper(expression, 0)
