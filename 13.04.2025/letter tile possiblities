@@ -1,0 +1,24 @@
+class Solution(object):
+    def numTilePossibilities(self, tiles):
+        arr = []
+        vis = set()
+
+        for tile in tiles:
+            new_words = []
+            # Generate new words by inserting the current tile into all possible positions
+            for word in arr:
+                for i in range(len(word) + 1):
+                    new_word = word[:i] + tile + word[i:]
+                    if new_word not in vis:
+                        new_words.append(new_word)
+                        vis.add(new_word)
+            
+            # Add the tile as a new word if not already visited
+            if tile not in vis:
+                vis.add(tile)
+                arr.append(tile)
+            
+            # Extend arr with newly generated words
+            arr.extend(new_words)
+
+        return len(arr)
