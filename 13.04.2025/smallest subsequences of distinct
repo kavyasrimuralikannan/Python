@@ -1,0 +1,22 @@
+class Solution(object):
+    def smallestSubsequence(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        lookup={}
+        stack=[]
+
+        for i in range(len(s)):
+            lookup[s[i]]=i
+        
+        for i in range(len(s)):
+            if s[i] in stack:
+                continue
+            
+            while stack and stack[-1]>s[i] and i<lookup[stack[-1]]:
+                stack.pop()
+            
+            stack.append(s[i])
+        return ''.join(stack)
+        
