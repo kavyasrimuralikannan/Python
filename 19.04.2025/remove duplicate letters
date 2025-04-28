@@ -1,0 +1,17 @@
+class Solution(object):
+    def removeDuplicateLetters(self, s):
+        last_ocr = {char:idx for idx,char in enumerate(s)}
+        stack = []
+        in_stack = set()
+        for idx,char in enumerate(s):
+            if char in in_stack:
+                continue
+            while stack and char < stack[-1] and idx < last_ocr[stack[-1]]:
+                reversed_str = stack.pop()
+                in_stack.remove(reversed_str)
+            
+            stack.append(char)
+            in_stack.add(char)
+            
+        return ''.join(stack)
+
