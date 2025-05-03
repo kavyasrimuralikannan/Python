@@ -1,0 +1,26 @@
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+        l_index = 0
+        h_index = len(numbers) - 1
+
+        while l_index < h_index:
+            low = numbers[l_index]
+            high = numbers[h_index]
+
+            if low + high > target:
+                h_index -= 1
+                continue
+            
+            if low + high < target:
+                l_index += 1
+                continue
+            
+            return [l_index+1, h_index+1]   # 1 based index
+            
+        
