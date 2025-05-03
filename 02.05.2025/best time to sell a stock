@@ -1,0 +1,10 @@
+class Solution(object):
+    def maxProfit(self, k, prices):
+        n = len(prices)
+        sell = [0 for i in range(k+1)]
+        buy = [float('-inf') for i in range(k+1)]
+        for i in range(n):
+            for j in range(k, 0, -1):
+                sell[j] = max(sell[j], prices[i] + buy[j])
+                buy[j] = max(buy[j], sell[j-1] - prices[i])
+        return sell[k]
