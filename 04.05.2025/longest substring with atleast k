@@ -1,0 +1,27 @@
+class Solution(object):
+    def longestSubstring(self, s, k):
+        """
+        1. when we update the result?
+        A: when all number within current window are valid (freq >= k)
+        2. when we shrink the window
+        A: when we have one more validLetter number
+        3. to what extend do we shrink
+        A: this is the trick, we maintain a uniqueLetter count
+        """
+        ans = -float('inf')
+        nLetter, nSize = len(set(s)), len(s)
+        for maxLetter in range(1, nLetter + 1):
+            i, count = 0, defaultdict(int)
+            nUniqueLetter, nValidLetter = 0, 0
+            for j in range(nSize):
+                count[s[j]] += 1
+                nUniqueLetter += count[s[j]] == 1
+                nValidLetter  += count[s[j]] == k
+                while nUniqueLetter > maxLetter:
+                    count[s[i]] -= 1
+                    nUniqueLetter -= count[s[i]] == 0
+                    nValidLetter  -= count[s[i]] == (k-1)
+                    i += 1
+                if nValidLetter == nUniqueLetter:
+                    ans = max(ans, j-i+1)
+        return 0 if ans == -float('inf') else ans
