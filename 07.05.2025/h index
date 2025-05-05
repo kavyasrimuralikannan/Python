@@ -1,0 +1,11 @@
+class Solution(object):
+    def hIndex(self, citations):
+        citations.sort()
+        h_ind = 0
+        for i in range(len(citations)):
+            if citations[i] <= len(citations) - i:
+                h_ind = max(h_ind, citations[i])
+            else:
+                l = len(citations) - i
+                h_ind = max(h_ind, l)
+        return h_ind
