@@ -1,0 +1,15 @@
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        Val = set(nums)
+        Result = 0
+        Out = []
+        for i in Val:
+            Temp = (nums.count(i))
+            if Temp > (len(nums)/3):
+                Result = Temp
+                Out.append(i)
+        return Out
